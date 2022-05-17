@@ -1,17 +1,31 @@
 package racingCar.domain;
 
-import org.junit.platform.commons.util.StringUtils;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 public class NameValidator {
     private static final int MAX_LENGTH = 5;
 
-    public static void validateName(String name) {
-        checkNull(name);
-        checkLength(name);
+    public static ArrayList<String> validateName(String nameString) {
+        ArrayList<String> names = new ArrayList<>(List.of(nameString.split(",")));
+        for(String eachName : names){
+         checkNullAndEmpty(eachName);
+         checkLength(eachName);
+        }
+        checkDuplicate(names);
+        return names;
     }
 
-    private static void checkNull(String name) {
-        if(StringUtils.isBlank(name)){
+    private static void checkDuplicate(ArrayList<String> names) {
+        var setCars = new HashSet<>(names);
+        if(names.size() != setCars.size()){
+            throw new IllegalArgumentException("자동차 이름은 중복될 수 없습니다.");
+        }
+    }
+
+    private static void checkNullAndEmpty(String name) {
+        if(name==null||name.isEmpty()){
             throw new IllegalArgumentException("공백을 입력할 수 없습니다.");
         }
     }

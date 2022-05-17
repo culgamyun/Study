@@ -7,7 +7,7 @@ public class Car {
 
     private int position;
 
-    public Car(String name){
+    private Car(String name){
         this.name = name;
         this.position = INITIAL_POSITION;
     }
@@ -24,4 +24,7 @@ public class Car {
         return position;
     }
 
+    public static Car of(String name) {
+        return new Car(name);
+    }
 }
